@@ -1,14 +1,14 @@
 import puppeteer from 'puppeteer-core';
-import { login } from './util/login';
-import createSession from './scrap';
-import fs from 'fs';
-import { QimenType } from './types';
-import { LOG_PATH, log } from './util/logging';
 import parse from './parse';
-
-init();
+import save, { initChartPaths } from './save';
+import createSession from './scrap';
+import { QimenType } from './types';
+import { initLogPath, log } from './util/logging';
+import { login } from './util/login';
 
 (async () => {
+  await init();
+
   const browser = await puppeteer.launch({
     executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   });
@@ -32,9 +32,9 @@ init();
     try {
       const response = await queryChart(type, current);
       const body = await response.text();
-      console.log(body);
-      // const json = parse(type, current, body);
+      const json = parse(type, current, body);
 
+      save(type, current, json);
     } catch (err) {
       log(type, current.toISOString());
       console.error(err);
@@ -47,6 +47,5 @@ init();
 })();
 
 function init() {
-  fs.mkdirSync(LOG_PATH, { recursive: true });
-  fs.mkdirSync('./charts', { recursive: true });
+  return Promise.all([initLogPath(), initChartPaths()]);
 }

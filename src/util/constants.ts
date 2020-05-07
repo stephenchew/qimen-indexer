@@ -9,7 +9,19 @@ export const getTypeValue = (() => {
     ['hour', '10'],
   ]);
 
-  return (type: QimenType) => TYPE_VALUE.get(type);
+  return (type: QimenType) => TYPE_VALUE.get(type) ?? '';
+})();
+
+export const getTypeDateFormat = (() => {
+  const TYPE_VALUE = new Map<QimenType, string>([
+    ['destiny', 'yyyy-MM-dd HH:mm:ss'],
+    ['year', 'yyyy'],
+    ['month', 'yyyy-MM'],
+    ['day', 'yyyy-MM-dd'],
+    ['hour', 'yyyy-MM-dd HH:mm:ss'],
+  ]);
+
+  return (type: QimenType) => TYPE_VALUE.get(type) ?? '';
 })();
 
 export const YIN_YANG = ['yin', 'yang'];

@@ -4,7 +4,7 @@ export type QimenType = 'destiny' | 'year' | 'month' | 'day' | 'hour';
 
 export type Chart = {
   type: QimenType;
-  temporal: Date;
+  temporal: string;
   'bazi-hour': string | undefined;
   'bazi-month': string | undefined;
   'bazi-day': string | undefined;
