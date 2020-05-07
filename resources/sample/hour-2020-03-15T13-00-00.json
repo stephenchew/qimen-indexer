@@ -1,0 +1,164 @@
+{
+  "type": "hour",
+  "time": "2020-03-15 13:00:00",
+  "bazi-year": "庚子",
+  "bazi-month": "己卯",
+  "bazi-day": "丁巳",
+  "bazi-hour": "丁未",
+  "formation-yinyang": "yang",
+  "formation-number": 7,
+  "envoy": "西南",
+  "chief-star": "天芮",
+  "jiazi-clan": "甲辰",
+  "season": "谷雨", 
+  "combination": [
+    "八门伏吟"
+  ],
+  "sky-horse": "东南",
+  "southeast": [
+    "壬",
+    "丁",
+    "天芮",
+    "杜",
+    "值符"
+  ],
+  "southeast-heaven-stem": "壬",
+  "southeast-earth-stem": "丁",
+  "southeast-star": "天芮",
+  "southeast-door": "杜",
+  "southeast-deity": "值符",
+  "southeast-empty": false,
+  "southeast-flying-star": 4,
+  "southeast-combination": [
+    "壬入墓",
+    "相佐",
+    "六仪击刑",
+    "地网"
+  ],
+  "south": [
+    "戊",
+    "庚",
+    "天柱",
+    "景",
+    "腾蛇"
+  ],
+  "south-heaven-stem": "戊",
+  "south-earth-stem": "庚",
+  "south-star": "天柱",
+  "south-door": "景",
+  "south-deity": "腾蛇",
+  "south-empty": false,
+  "south-flying-star": 9,
+  "south-combination": [
+  ],
+  "southwest": [
+    "乙",
+    "壬",
+    "天心",
+    "死",
+    "太阴"
+  ],
+  "southwest-heaven-stem": "乙",
+  "southwest-earth-stem": "壬",
+  "southwest-star": "天心",
+  "southwest-door": "死",
+  "southwest-deity": "太阴",
+  "southwest-empty": false,
+  "southwest-flying-star": 2,
+  "southwest-combination": [
+    "地诈",
+    "权怡"
+  ],
+  "east": [
+    "庚",
+    "癸",
+    "天英",
+    "伤",
+    "九天"
+  ],
+  "east-heaven-stem": "庚",
+  "east-earth-stem": "癸",
+  "east-star": "天英",
+  "east-door": "伤",
+  "east-deity": "九天",
+  "east-empty": true,
+  "east-flying-star": 3,
+  "east-combination": [
+    "大格"
+  ],
+  "centre": [
+    "丙",
+    "天禽"
+  ],
+  "centre-heaven-stem": "丙",
+  "centre-earth-stem": "丙",
+  "centre-flying-star": 5,
+  "west": [
+    "辛",
+    "戊",
+    "天蓬",
+    "惊",
+    "六合"
+  ],
+  "west-heaven-stem": "辛",
+  "west-earth-stem": "戊",
+  "west-star": "天蓬",
+  "west-door": "惊",
+  "west-deity": "六合",
+  "west-empty": false,
+  "west-flying-star": 7,
+  "west-combination": [
+  ],
+  "northeast": [
+    "丁",
+    "己",
+    "天辅",
+    "生",
+    "九地"
+  ],
+  "northeast-heaven-stem": "丁",
+  "northeast-earth-stem": "己",
+  "northeast-star": "天辅",
+  "northeast-door": "生",
+  "northeast-deity": "九地",
+  "northeast-empty": true,
+  "northeast-flying-star": 8,
+  "northeast-combination": [
+    "丁奇墓",
+    "鬼遁",
+    "重诈"
+  ],
+  "north": [
+    "癸",
+    "辛",
+    "天冲",
+    "休",
+    "朱雀"    
+  ],
+  "north-heaven-stem": "癸",
+  "north-earth-stem": "辛",
+  "north-star": "天冲",
+  "north-door": "休",
+  "north-deity": "朱雀",
+  "north-empty": false,
+  "north-flying-star": 1,
+  "north-combination": [
+  ],
+  "northwest": [
+    "己",
+    "乙",
+    "天任",
+    "开",
+    "勾陈"
+  ],
+  "northwest-heaven-stem": "己",
+  "northwest-earth-stem": "乙",
+  "northwest-star": "天任",
+  "northwest-door": "开",
+  "northwest-deity": "勾陈",
+  "northwest-empty": false,
+  "northwest-flying-star": 6,
+  "northwest-combination": [
+    "人诈"
+  ]
+}

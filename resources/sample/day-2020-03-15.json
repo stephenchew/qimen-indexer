@@ -1,0 +1,163 @@
+{
+  "type": "day",
+  "temporal": "2020-03-15",
+  "bazi-year": "庚子",
+  "bazi-month": "己卯",
+  "bazi-day": "丁巳",
+  "formation-yinyang": "yang",
+  "formation-number": 3,
+  "envoy": "西南",
+  "chief-star": "天任",
+  "jiazi-clan": "甲寅",
+  "season": "谷雨", 
+  "combination": [ "八门反吟" ],
+  "sky-horse": "东南",
+  "southeast": [
+    "丙", "己", "天蓬", "开", "九天"
+  ],
+  "southeast-heaven-stem": "丙",
+  "southeast-earth-stem": "己",
+  "southeast-star": "天蓬",
+  "southeast-door": "开",
+  "southeast-deity": "九天",
+  "southeast-empty": false,
+  "southeast-flying-star": 2,
+  "southeast-combination": [
+    "人诈",
+    "天遁",
+    "丙奇旺相",
+    "悖格",
+    "门迫"
+  ],
+  "south": [
+    "癸",
+    "丁",
+    "天任",
+    "休",
+    "值符"
+  ],
+  "south-heaven-stem": "癸",
+  "south-earth-stem": "丁",
+  "south-star": "天任",
+  "south-door": "休",
+  "south-deity": "值符",
+  "south-empty": false,
+  "south-flying-star": 7,
+  "south-combination": [
+    "人诈",
+    "相佐",
+    "腾蛇妖娇",
+    "天罗",
+    "门迫"
+  ],
+  "southwest": [
+    "戊",
+    "乙",
+    "天冲",
+    "生",
+    "腾蛇"
+  ],
+  "southwest-heaven-stem": "戊",
+  "southwest-earth-stem": "乙",
+  "southwest-star": "天冲",
+  "southwest-door": "生",
+  "southwest-deity": "腾蛇",
+  "southwest-empty": false,
+  "southwest-flying-star": 9,
+  "southwest-combination": [
+    "人诈"
+  ],
+  "east": [
+    "辛",
+    "戊",
+    "天心",
+    "惊",
+    "九地"
+  ],
+  "east-heaven-stem": "辛",
+  "east-earth-stem": "戊",
+  "east-star": "天心",
+  "east-door": "惊",
+  "east-deity": "九地",
+  "east-empty": false,
+  "east-flying-star": 1,
+  "east-combination": [
+    "门迫"
+  ],
+  "centre": [
+    "庚",
+    "天禽"
+  ],
+  "centre-heaven-stem": "庚",
+  "centre-earth-stem": "庚",
+  "centre-flying-star": 3,
+  "west": [
+    "己",
+    "壬",
+    "天辅",
+    "伤",
+    "太阴"
+  ],
+  "west-heaven-stem": "己",
+  "west-earth-stem": "壬",
+  "west-star": "天辅",
+  "west-door": "伤",
+  "west-deity": "太阴",
+  "west-empty": false,
+  "west-flying-star": 5,
+  "west-combination": [
+    "宫迫"
+  ],
+  "northeast": [
+    "壬",
+    "癸",
+    "天柱",
+    "死",
+    "朱雀"
+  ],
+  "northeast-heaven-stem": "壬",
+  "northeast-earth-stem": "癸",
+  "northeast-star": "天柱",
+  "northeast-door": "死",
+  "northeast-deity": "朱雀",
+  "northeast-empty": true,
+  "northeast-flying-star": 6,
+  "northeast-combination": [
+  ],
+  "north": [
+    "乙",
+    "丙",
+    "天芮",
+    "景",
+    "勾陈"
+  ],
+  "north-heaven-stem": "乙",
+  "north-earth-stem": "丙",
+  "north-star": "天芮",
+  "north-door": "景",
+  "north-deity": "勾陈",
+  "north-empty": true,
+  "north-flying-star": 8,
+  "north-combination": [
+    "乙奇旺相",
+    "宫迫"
+  ],
+  "northwest": [
+    "丁",
+    "辛",
+    "天英",
+    "杜",
+    "六合"
+  ],
+  "northwest-heaven-stem": "丁",
+  "northwest-earth-stem": "辛",
+  "northwest-star": "天英",
+  "northwest-door": "杜",
+  "northwest-deity": "六合",
+  "northwest-empty": false,
+  "northwest-flying-star": 4,
+  "northwest-combination": [
+    "地诈",
+    "宫迫"
+  ]
+}

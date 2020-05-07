@@ -1,0 +1,25 @@
+{
+  "name": "qimen-indexer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsc && node build/index.js",
+    "start:nocompile": "node build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sikei": "node build/sikei.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.18",
+    "@types/puppeteer": "^2.0.1",
+    "@types/puppeteer-core": "^2.0.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "puppeteer-core": "^3.0.2"
+  }
+}

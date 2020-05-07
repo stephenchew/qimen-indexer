@@ -1,0 +1,301 @@
+{
+  "mappings": {
+    "properties": {
+      "temporal": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss"
+      },
+      "bazi-day": {
+        "type": "keyword"
+      },
+      "bazi-hour": {
+        "type": "keyword"
+      },
+      "bazi-month": {
+        "type": "keyword"
+      },
+      "sky-horse": {
+        "type": "keyword"
+      },
+      "centre": {
+        "type": "keyword"
+      },
+      "north": {
+        "type": "keyword"
+      },
+      "south": {
+        "type": "keyword"
+      },
+      "east": {
+        "type": "keyword"
+      },
+      "west": {
+        "type": "keyword"
+      },
+      "northeast": {
+        "type": "keyword"
+      },
+      "northwest": {
+        "type": "keyword"
+      },
+      "southeast": {
+        "type": "keyword"
+      },
+      "southwest": {
+        "type": "keyword"
+      },
+      "centre-earth-stem": {
+        "type": "keyword"
+      },
+      "centre-flying-star": {
+        "type": "long"
+      },
+      "centre-heaven-stem": {
+        "type": "keyword"
+      },
+      "centre-star": {
+        "type": "keyword"
+      },
+      "chief-star": {
+        "type": "keyword"
+      },
+      "combination": {
+        "type": "keyword"
+      },
+      "east-combination": {
+        "type": "keyword"
+      },
+      "east-deity": {
+        "type": "keyword"
+      },
+      "east-door": {
+        "type": "keyword"
+      },
+      "east-earth-stem": {
+        "type": "keyword"
+      },
+      "east-empty": {
+        "type": "boolean"
+      },
+      "east-flying-star": {
+        "type": "long"
+      },
+      "east-heaven-stem": {
+        "type": "keyword"
+      },
+      "east-sky-horse": {
+        "type": "boolean"
+      },
+      "east-star": {
+        "type": "keyword"
+      },
+      "envoy": {
+        "type": "keyword"
+      },
+      "formation-number": {
+        "type": "long"
+      },
+      "formation-yinyang": {
+        "type": "keyword"
+      },
+      "jiazi-clan": {
+        "type": "keyword"
+      },
+      "north-combination": {
+        "type": "keyword"
+      },
+      "north-deity": {
+        "type": "keyword"
+      },
+      "north-door": {
+        "type": "keyword"
+      },
+      "north-earth-stem": {
+        "type": "keyword"
+      },
+      "north-empty": {
+        "type": "boolean"
+      },
+      "north-flying-star": {
+        "type": "long"
+      },
+      "north-heaven-stem": {
+        "type": "keyword"
+      },
+      "north-sky-horse": {
+        "type": "boolean"
+      },
+      "north-star": {
+        "type": "keyword"
+      },
+      "northeast-combination": {
+        "type": "keyword"
+      },
+      "northeast-deity": {
+        "type": "keyword"
+      },
+      "northeast-door": {
+        "type": "keyword"
+      },
+      "northeast-earth-stem": {
+        "type": "keyword"
+      },
+      "northeast-empty": {
+        "type": "boolean"
+      },
+      "northeast-heaven-stem": {
+        "type": "keyword"
+      },
+      "northeast-flying-star": {
+        "type": "long"
+      },
+      "northeast-sky-horse": {
+        "type": "boolean"
+      },
+      "northeast-star": {
+        "type": "keyword"
+      },
+      "northwest-combination": {
+        "type": "keyword"
+      },
+      "northwest-deity": {
+        "type": "keyword"
+      },
+      "northwest-door": {
+        "type": "keyword"
+      },
+      "northwest-earth-stem": {
+        "type": "keyword"
+      },
+      "northwest-empty": {
+        "type": "boolean"
+      },
+      "northwest-flying-star": {
+        "type": "long"
+      },
+      "northwest-heaven-stem": {
+        "type": "keyword"
+      },
+      "northwest-sky-horse": {
+        "type": "boolean"
+      },
+      "northwest-star": {
+        "type": "keyword"
+      },
+      "season": {
+        "type": "keyword"
+      },
+      "south-combination": {
+        "type": "keyword"
+      },
+      "south-deity": {
+        "type": "keyword"
+      },
+      "south-door": {
+        "type": "keyword"
+      },
+      "south-earth-stem": {
+        "type": "keyword"
+      },
+      "south-empty": {
+        "type": "boolean"
+      },
+      "south-flying-star": {
+        "type": "long"
+      },
+      "south-heaven-stem": {
+        "type": "keyword"
+      },
+      "south-sky-horse": {
+        "type": "boolean"
+      },
+      "south-star": {
+        "type": "keyword"
+      },
+      "southeast-combination": {
+        "type": "keyword"
+      },
+      "southeast-deity": {
+        "type": "keyword"
+      },
+      "southeast-door": {
+        "type": "keyword"
+      },
+      "southeast-earth-stem": {
+        "type": "keyword"
+      },
+      "southeast-empty": {
+        "type": "boolean"
+      },
+      "southeast-flying-star": {
+        "type": "long"
+      },
+      "southeast-heaven-stem": {
+        "type": "keyword"
+      },
+      "southeast-sky-horse": {
+        "type": "boolean"
+      },
+      "southeast-star": {
+        "type": "keyword"
+      },
+      "southwest-combination": {
+        "type": "keyword"
+      },
+      "southwest-deity": {
+        "type": "keyword"
+      },
+      "southwest-door": {
+        "type": "keyword"
+      },
+      "southwest-earth-stem": {
+        "type": "keyword"
+      },
+      "southwest-empty": {
+        "type": "boolean"
+      },
+      "southwest-flying-star": {
+        "type": "long"
+      },
+      "southwest-heaven-stem": {
+        "type": "keyword"
+      },
+      "southwest-sky-horse": {
+        "type": "boolean"
+      },
+      "southwest-star": {
+        "type": "keyword"
+      },
+      "type": {
+        "type": "keyword"
+      },
+      "west-combination": {
+        "type": "keyword"
+      },
+      "west-deity": {
+        "type": "keyword"
+      },
+      "west-door": {
+        "type": "keyword"
+      },
+      "west-earth-stem": {
+        "type": "keyword"
+      },
+      "west-empty": {
+        "type": "boolean"
+      },
+      "west-flying-star": {
+        "type": "long"
+      },
+      "west-heaven-stem": {
+        "type": "keyword"
+      },
+      "west-sky-horse": {
+        "type": "boolean"
+      },
+      "west-star": {
+        "type": "keyword"
+      }
+    }
+  }
+}
