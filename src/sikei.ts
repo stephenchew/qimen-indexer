@@ -1471,7 +1471,7 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
   console.time('app');
 
   const everything = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => () =>
-    new Promise<number>((r) => setTimeout(() => r(i), i * 500))
+    new Promise<number>((r, rr) => setTimeout(() => (i % 2 == 0 ? r(i) : rr(i)), i * 500))
   );
 
   // const runner = createRunner(everything, 4);
@@ -1487,13 +1487,13 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
   //   console.log('done', done);
   // } while (!done);
 
-  for (
-    let runner = createRunner(everything, 5), result = await runner.next();
-    !(result.done ?? true);
-    result = await runner.next()
-  ) {
+  for (let runner = createRunner(everything, 3), result = await runner.next(); ; result = await runner.next()) {
+    console.log('done', result.done);
     result.value.map((val) => console.log(val));
     // await new Promise((r) => setTimeout(r, 20000));
+    if (result.done ?? true) {
+      break;
+    }
   }
 
   console.timeEnd('app');
