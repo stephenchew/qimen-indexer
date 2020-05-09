@@ -1,6 +1,7 @@
 import parse from './parse';
 import { getNormalisedDateFormat } from './store';
 import format from 'date-fns/format';
+import { Callable, createRunner } from './runner';
 
 const body1 = `<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div style="width:auto;"><html><head><met
 a http-equiv="Content-Type" content="text/html; charset=utf-8"></head><meta http-equiv="Content-Type" conten
@@ -1466,10 +1467,46 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 
 // console.log(x);
 
-const now = new Date();
+(async () => {
+  console.time('app');
 
-const dateFormat = getNormalisedDateFormat('hour');
+  const everything = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => () =>
+    new Promise<number>((r) => setTimeout(() => r(i), i * 500))
+  );
 
-console.log(dateFormat);
+  // const runner = createRunner(everything, 4);
 
-console.log(format(now, dateFormat));
+  // let done: boolean;
+
+  // do {
+  //   const result = await runner.next();
+
+  //   result.value.map((val) => console.log(val));
+
+  //   done = result.done ?? true;
+  //   console.log('done', done);
+  // } while (!done);
+
+  for (
+    let runner = createRunner(everything, 5), result = await runner.next();
+    !(result.done ?? true);
+    result = await runner.next()
+  ) {
+    result.value.map((val) => console.log(val));
+    // await new Promise((r) => setTimeout(r, 20000));
+  }
+
+  console.timeEnd('app');
+})();
+
+// (async () => {
+//   console.time('app');
+
+//   const p: Callable<number> = () => new Promise<number>((r) => setTimeout(() => r(200), 1000));
+
+//   await new Promise((r) => setTimeout(r, 2000));
+
+//   const result = await p();
+//   console.log(result);
+//   console.timeEnd('app');
+// })();
