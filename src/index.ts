@@ -7,6 +7,7 @@ import { initLogPath, logCrawling, logIndexing } from './util/logging';
 import { login } from './util/login';
 
 (async () => {
+  console.time('app');
   await init();
 
   const browser = await puppeteer.launch({
@@ -14,7 +15,9 @@ import { login } from './util/login';
   });
 
   try {
+    console.time('login');
     const sessionInfo = await login(browser);
+    console.timeEnd('login');
 
     if (!sessionInfo) {
       console.log('[ERROR] Unable to login, please check your credential.');
@@ -26,7 +29,7 @@ import { login } from './util/login';
 
     // loop starts here
 
-    const type: QimenType = 'hour';
+    const type: QimenType = 'month';
     const current: Date = new Date();
 
     try {
@@ -51,6 +54,7 @@ import { login } from './util/login';
     // loop ends here
   } finally {
     await browser.close();
+    console.timeEnd('app');
   }
 })();
 
