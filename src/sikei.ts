@@ -1483,15 +1483,6 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
     )
   );
 
-  // for (let runner = createRunner(everything, 9), result = await runner.next(); ; result = await runner.next()) {
-  //   console.log('done', result.done);
-  //   result.value.map((val) => console.log(val));
-  //   // await new Promise((r) => setTimeout(r, 20000));
-  //   if (result.done ?? true) {
-  //     break;
-  //   }
-  // }
-
   for (
     let runner = createRunner(everything, 5), result = await runner.next();
     !(result.done ?? true);
@@ -1499,7 +1490,7 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
   ) {
     console.log('done', result.done);
     result.value.map((val) => console.log(val));
-    await new Promise((r) => setTimeout(r, 10000));
+    // await new Promise((r) => setTimeout(r, 10000));
   }
 
   console.timeEnd('app');
