@@ -33,7 +33,7 @@ export const indexToEs = async (type: QimenType, date: Date, data: Chart) => {
   const id = format(date, getNormalisedDateFormat(type));
   const options = {
     uri: `http://localhost:9222/${type}/_doc/${id}`,
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
