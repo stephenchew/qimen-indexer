@@ -102,7 +102,14 @@ function parsePalaces($: CheerioStatic) {
         delete returnVal['centre-empty'];
         delete returnVal['centre-combination'];
         returnVal['centre'] = [...new Set<string>(returnVal['centre'] as string[])].filter(
-          (item: string) => item !== '' && item != '時' && !item.startsWith('天')
+          (item: string) =>
+            item !== '' &&
+            item != '命' &&
+            item != '年' &&
+            item !== '月' &&
+            item !== '日' &&
+            item != '時' &&
+            !item.startsWith('天')
         );
       }
 
