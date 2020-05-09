@@ -12,6 +12,10 @@ export const initLogPath = () => {
   });
 };
 
-export const log = (type: QimenType, message: string): void => {
+export const logCrawling = (type: QimenType, message: string): void => {
   fs.appendFileSync(`${LOG_PATH}/unprocessed-${type}.log`, `${message}\n`);
+};
+
+export const logIndexing = (type: QimenType, message: string): void => {
+  fs.appendFileSync(`${LOG_PATH}/unindexed-${type}.log`, `${message}\n`);
 };

@@ -1,4 +1,6 @@
 import parse from './parse';
+import { getNormalisedDateFormat } from './store';
+import format from 'date-fns/format';
 
 const body1 = `<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div style="width:auto;"><html><head><met
 a http-equiv="Content-Type" content="text/html; charset=utf-8"></head><meta http-equiv="Content-Type" conten
@@ -1459,7 +1461,15 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 </table></html></div>`;
 
 // console.time('parse');
-const x = parse('day', new Date(), body2);
+// const x = parse('day', new Date(), body2);
 // console.timeEnd('parse');
 
-console.log(x);
+// console.log(x);
+
+const now = new Date();
+
+const dateFormat = getNormalisedDateFormat('hour');
+
+console.log(dateFormat);
+
+console.log(format(now, dateFormat));

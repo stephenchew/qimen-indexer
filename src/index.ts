@@ -1,9 +1,9 @@
 import puppeteer from 'puppeteer-core';
 import parse from './parse';
-import save, { initChartPaths } from './save';
+import { initChartPaths, saveToFile, indexToEs } from './store';
 import createSession from './scrap';
 import { QimenType } from './types';
-import { initLogPath, log } from './util/logging';
+import { initLogPath, logCrawling, logIndexing } from './util/logging';
 import { login } from './util/login';
 
 (async () => {
@@ -34,10 +34,18 @@ import { login } from './util/login';
       const body = await response.text();
       const json = parse(type, current, body);
 
-      save(type, current, json);
+      saveToFile(type, current, json);
+
+      try {
+        const esResponse = await indexToEs(type, current, json);
+        console.log('es', esResponse);
+      } catch (err) {
+        logIndexing(type, current.toISOString());
+        console.error('Error indexing chart: ' + err);
+      }
     } catch (err) {
-      log(type, current.toISOString());
-      console.error(err);
+      logCrawling(type, current.toISOString());
+      console.error('Error crawling chart: ' + err);
     }
 
     // loop ends here
@@ -46,6 +54,6 @@ import { login } from './util/login';
   }
 })();
 
-function init() {
-  return Promise.all([initLogPath(), initChartPaths()]);
+async function init() {
+  await Promise.all([initLogPath(), initChartPaths()]);
 }

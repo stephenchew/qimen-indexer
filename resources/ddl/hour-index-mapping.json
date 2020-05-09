@@ -14,6 +14,9 @@
       "bazi-month": {
         "type": "keyword"
       },
+      "bazi-year": {
+        "type": "keyword"
+      },
       "sky-horse": {
         "type": "keyword"
       },
