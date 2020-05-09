@@ -1467,46 +1467,54 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 
 // console.log(x);
 
+/**
+ * @TODO Runner example - write a unit test
+ *
+ */
 (async () => {
   console.time('app');
 
   const everything = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => () =>
-    new Promise<number>((r, rr) => setTimeout(() => (i % 2 == 0 ? r(i) : rr(i)), i * 500))
+    new Promise<number>((r, rr) => setTimeout(() => (i % 2 == 0 ? r(i) : rr('error')), i * 500)).catch((err) =>
+      Promise.reject({
+        message: err,
+        originalValue: i,
+      })
+    )
   );
 
-  // const runner = createRunner(everything, 4);
-
-  // let done: boolean;
-
-  // do {
-  //   const result = await runner.next();
-
+  // for (let runner = createRunner(everything, 9), result = await runner.next(); ; result = await runner.next()) {
+  //   console.log('done', result.done);
   //   result.value.map((val) => console.log(val));
+  //   // await new Promise((r) => setTimeout(r, 20000));
+  //   if (result.done ?? true) {
+  //     break;
+  //   }
+  // }
 
-  //   done = result.done ?? true;
-  //   console.log('done', done);
-  // } while (!done);
-
-  for (let runner = createRunner(everything, 3), result = await runner.next(); ; result = await runner.next()) {
+  for (
+    let runner = createRunner(everything, 5), result = await runner.next();
+    !(result.done ?? true);
+    result = await runner.next()
+  ) {
     console.log('done', result.done);
     result.value.map((val) => console.log(val));
-    // await new Promise((r) => setTimeout(r, 20000));
-    if (result.done ?? true) {
-      break;
-    }
+    await new Promise((r) => setTimeout(r, 10000));
   }
 
   console.timeEnd('app');
 })();
 
-// (async () => {
-//   console.time('app');
+/**
+ * Another example
+ */
 
-//   const p: Callable<number> = () => new Promise<number>((r) => setTimeout(() => r(200), 1000));
+// for (let gen = hehe(['a', 'b', 'c', 'd']), result = gen.next(); !result.done; result = gen.next()) {
+//   console.log(result.value, result.done);
+// }
 
-//   await new Promise((r) => setTimeout(r, 2000));
-
-//   const result = await p();
-//   console.log(result);
-//   console.timeEnd('app');
-// })();
+// function* hehe(arr: string[]) {
+//   for (let a of arr) {
+//     yield a;
+//   }
+// }

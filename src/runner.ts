@@ -4,8 +4,8 @@ export interface Callable<T> {
 
 export async function* createRunner<T>(
   tasks: Callable<T>[],
-  size = 10
-): AsyncGenerator<PromiseSettledResult<T>[], PromiseSettledResult<T>[], unknown> {
+  size: number
+): AsyncGenerator<PromiseSettledResult<T>[], void, unknown> {
   const length = tasks.length;
 
   let runningTasks: Promise<PromiseSettledResult<T>[]>;
@@ -18,10 +18,10 @@ export async function* createRunner<T>(
 
     futureTasks = Promise.allSettled(tasks.slice(i + size, getEnd(length, end, size)).map((t) => t()));
 
-    if (i + size < tasks.length) {
+    if (i < tasks.length) {
       yield await runningTasks;
     } else {
-      return await runningTasks;
+      return;
     }
   }
 }
