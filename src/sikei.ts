@@ -2,6 +2,8 @@ import parse from './parse';
 import { getNormalisedDateFormat } from './store';
 import format from 'date-fns/format';
 import { Callable, createRunner } from './runner';
+import addDays from 'date-fns/addDays';
+import datesGenerator from './dates-generator';
 
 const body1 = `<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div style="width:auto;"><html><head><met
 a http-equiv="Content-Type" content="text/html; charset=utf-8"></head><meta http-equiv="Content-Type" conten
@@ -1509,3 +1511,19 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 //     yield a;
 //   }
 // }
+
+// const start = new Date('2020-05-09T23:00:00');
+// const finish = new Date('2020-05-11T21:00:00');
+
+// const start = new Date('2020-05-10T00:00:00');
+// const finish = new Date('2020-05-12T00:00:00');
+
+// const start = new Date('2020-05-01');
+// const finish = new Date('2020-05-31');
+
+const start = new Date('2020');
+const finish = new Date('2030');
+
+const dates = datesGenerator('year', start, finish);
+
+dates.forEach((d) => console.log(d.toString()));
