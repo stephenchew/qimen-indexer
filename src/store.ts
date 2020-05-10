@@ -4,6 +4,8 @@ import rp from 'request-promise-native';
 import { Chart, QimenType } from './types';
 import { getTypeDateFormat } from './util/constants';
 
+const URL = 'http://localhost:9222';
+
 export const CHART_PATH = './charts';
 
 export const initChartPaths = () => {
@@ -32,7 +34,7 @@ export const saveToFile = (type: QimenType, date: Date, data: Chart) => {
 export const indexToEs = async (type: QimenType, date: Date, data: Chart) => {
   const id = format(date, getNormalisedDateFormat(type));
   const options = {
-    uri: `http://localhost:9222/${type}/_doc/${id}`,
+    uri: `${URL}/${type}/_doc/${id}`,
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
