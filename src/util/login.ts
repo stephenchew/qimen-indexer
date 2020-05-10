@@ -1,12 +1,18 @@
-import { Browser } from 'puppeteer-core';
+import puppeteer, { Browser } from 'puppeteer-core';
 import cheerio from 'cheerio';
 
 const selector = 'input[name=Geju\\[access\\]]';
 
+const createBrowser = async () =>
+  await puppeteer.launch({
+    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  });
+
 export const login = async (
-  browser: Browser,
+  globalBrowser?: Browser,
   passcode = '7676'
 ): Promise<{ csrf: string; cookies: string } | undefined> => {
+  const browser = globalBrowser ?? (await createBrowser());
   const page = await browser.newPage();
 
   await page.goto('http://fengshui-republic.com/qimen-access');
@@ -31,11 +37,19 @@ export const login = async (
 
   const cookies = await page.cookies();
 
-  return {
-    csrf: meta,
-    cookies: cookies
-      .filter((c) => c.name === '_csrf-frontend' || c.name === 'advanced-frontend')
-      .map((c) => `${c.name}=${c.value}`)
-      .reduce((val, curr) => `${val}; ${curr}`),
-  };
+  try {
+    return {
+      csrf: meta,
+      cookies: cookies
+        .filter((c) => c.name === '_csrf-frontend' || c.name === 'advanced-frontend')
+        .map((c) => `${c.name}=${c.value}`)
+        .reduce((val, curr) => `${val}; ${curr}`),
+    };
+  } finally {
+    // if the browser was passed in, leave it alone.
+    // if the browser was created for the purpose of login, close it.
+    if (!globalBrowser) {
+      await browser.close();
+    }
+  }
 };
