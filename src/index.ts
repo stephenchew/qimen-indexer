@@ -1,11 +1,10 @@
-import puppeteer from 'puppeteer-core';
 import datesGenerator from './dates-generator';
 import parse from './parse';
 import { createRunner, Callable } from './runner';
 import { initChartPaths, saveToFile, indexToEs } from './store';
 import createSession from './scrap';
 import { QimenType } from './types';
-import { initLogPath, logCrawling, logIndexing } from './util/logging';
+import { clog, initLogPath, logCrawling, logIndexing } from './util/logging';
 import { login } from './util/login';
 
 (async () => {
@@ -17,7 +16,7 @@ import { login } from './util/login';
   console.timeEnd('login');
 
   if (!sessionInfo) {
-    console.log('[ERROR] Unable to login, please check your credential.');
+    clog('[ERROR] Unable to login, please check your credential.');
     return;
   }
 
@@ -32,7 +31,7 @@ import { login } from './util/login';
 
   const dates = datesGenerator(type, start, finish);
 
-  console.log(`Running for ${type} from ${start.toString()} to ${finish.toString()}`);
+  clog(`Running for ${type} from ${start.toString()} to ${finish.toString()}`);
 
   const responses: Callable<{ type: QimenType; date: Date; body: any }>[] = dates.map((current: Date) => () =>
     queryChart(type, current).then((body) => ({ type, date: current, body }))
@@ -76,7 +75,7 @@ import { login } from './util/login';
 
     // console.timeEnd('es');
 
-    console.log(`processed ${result.value.length} record(s)`);
+    clog(`processed ${result.value.length} record(s)`);
   }
   console.timeEnd('app');
 })();

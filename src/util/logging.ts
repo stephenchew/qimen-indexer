@@ -1,3 +1,4 @@
+import format from 'date-fns/format';
 import fs from 'fs';
 import { QimenType } from '../types';
 
@@ -18,4 +19,8 @@ export const logCrawling = (type: QimenType, message: string): void => {
 
 export const logIndexing = (type: QimenType, message: string): void => {
   fs.appendFileSync(`${LOG_PATH}/unindexed-${type}.log`, `${message}\n`);
+};
+
+export const clog = (...message: string[]) => {
+  console.log(`[${format(new Date(), `yyyy-MM-dd'T'HH:mm:ss.SSS`)}]`, ...message);
 };
