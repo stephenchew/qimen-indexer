@@ -25,10 +25,14 @@ export const initChartPaths = () => {
 };
 
 export const saveToFile = (type: QimenType, date: Date, data: Chart) => {
-  fs.writeFileSync(
-    `${CHART_PATH}/${type}/${format(date, getNormalisedDateFormat(type))}.json`,
-    JSON.stringify(data, null, 2)
-  );
+  let storePath = `${CHART_PATH}/${type}`;
+
+  if (type === 'hour') {
+    storePath += `/${date.getFullYear()}`;
+    fs.mkdirSync(storePath, { recursive: true });
+  }
+
+  fs.writeFileSync(`${storePath}/${format(date, getNormalisedDateFormat(type))}.json`, JSON.stringify(data, null, 2));
 };
 
 export const indexToEs = async (type: QimenType, date: Date, data: Chart) => {
