@@ -48,7 +48,7 @@ import { login } from './util/login';
   ) {
     // console.time('es');
 
-    let promiseElastic = [];
+    let promiseElastic: Promise<{ type: QimenType; date: Date; resp: any }>[] = [];
     for (let settled of result.value) {
       // can't use array.forEach
       switch (settled.status) {
@@ -61,7 +61,9 @@ import { login } from './util/login';
           promiseElastic.push(
             indexToEs(type, date, json)
               .then((resp) => ({ type, date, resp }))
-              .catch((error) => ({ type, date, error }))
+              .catch((error) => {
+                throw { type, date, error };
+              })
           );
 
           break;
