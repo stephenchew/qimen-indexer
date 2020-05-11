@@ -23,5 +23,8 @@ export const logIndexing = (type: QimenType, message: string): void => {
 };
 
 export const clog = (...message: any[]) => {
-  console.log(`[${format(new Date(), `yyyy-MM-dd'T'HH:mm:ss.SSS`)}]`, ...message);
+  const dateFormat = 'yyyy-MM-dd HH:mm:ss.SSS';
+  const formatted = message.map((m) => (m instanceof Date ? format(m, dateFormat) : m));
+
+  console.log(`[${format(new Date(), dateFormat)}]`, ...formatted);
 };

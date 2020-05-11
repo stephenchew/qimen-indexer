@@ -41,10 +41,10 @@ if (!validateCli(cliOption)) {
 
   if (cliOption.options.missing) {
     dates = dates.filter((d) => !chartExists(type, d));
-    clog(`Running only for missing '${type}'`);
+    clog(`Running only for missing '${type}' - ${dates.length} record(s)`);
     dates.forEach((d) => clog(d));
   } else {
-    clog(`Running for ${type} from ${start.toString()} to ${finish.toString()}`);
+    clog(`Running for '${type}' from`, start, 'to', finish, `- ${dates.length} record(s)`);
   }
 
   const responses: Callable<{ type: QimenType; date: Date; payload: any }>[] = dates.map((current: Date) => () =>
