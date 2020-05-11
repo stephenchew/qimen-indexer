@@ -26,15 +26,19 @@ import { login } from './util/login';
   // loop starts here
 
   const type: QimenType = 'hour';
-  const start = new Date('2020-02-01T00:00:00');
-  const finish = new Date('2020-02-07T21:00:00');
+  const start = new Date('2020-01-01T00:00:00');
+  const finish = new Date('2020-01-01T00:00:00');
 
   const dates = datesGenerator(type, start, finish);
 
   clog(`Running for ${type} from ${start.toString()} to ${finish.toString()}`);
 
-  const responses: Callable<{ type: QimenType; date: Date; body: any }>[] = dates.map((current: Date) => () =>
-    queryChart(type, current).then((body) => ({ type, date: current, body }))
+  const responses: Callable<{ type: QimenType; date: Date; payload: any }>[] = dates.map((current: Date) => () =>
+    queryChart(type, current)
+      .then((body) => ({ type, date: current, payload: body }))
+      .catch((err) => {
+        throw { type, date: current, payload: err };
+      })
   );
 
   for (
@@ -51,7 +55,7 @@ import { login } from './util/login';
         case 'fulfilled':
           const type = settled.value.type;
           const date = settled.value.date;
-          const json = parse(type, date, settled.value.body);
+          const json = parse(type, date, settled.value.payload);
           saveToFile(type, date, json);
 
           promiseElastic.push(
@@ -62,7 +66,8 @@ import { login } from './util/login';
 
           break;
         case 'rejected':
-          // @TODO log to unprocessed
+          logCrawling(settled.reason.type, settled.reason.date);
+          clog(`Unable to scrap`, settled.reason.date);
           break;
       }
     }
