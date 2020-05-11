@@ -24,16 +24,11 @@ export const initChartPaths = () => {
   ]);
 };
 
-export const saveToFile = (type: QimenType, date: Date, data: Chart) => {
-  let storePath = `${CHART_PATH}/${type}`;
-
-  if (type === 'hour') {
-    storePath += `/${date.getFullYear()}`;
-    fs.mkdirSync(storePath, { recursive: true });
-  }
-
-  fs.writeFileSync(`${storePath}/${format(date, getNormalisedDateFormat(type))}.json`, JSON.stringify(data, null, 2));
-};
+export const saveToFile = (type: QimenType, date: Date, data: Chart) =>
+  fs.writeFileSync(
+    `${getStorePath(type, date, true)}/${format(date, getNormalisedDateFormat(type))}.json`,
+    JSON.stringify(data, null, 2)
+  );
 
 export const indexToEs = async (type: QimenType, date: Date, data: Chart) => {
   const id = format(date, getNormalisedDateFormat(type));
@@ -48,6 +43,17 @@ export const indexToEs = async (type: QimenType, date: Date, data: Chart) => {
 
   return rp(options).promise();
 };
+
+export function getStorePath(type: QimenType, date: Date, createIfMissing = false): string {
+  let storePath = `${CHART_PATH}/${type}`;
+
+  if (type === 'hour') {
+    storePath += `/${date.getFullYear()}`;
+    createIfMissing && !fs.existsSync(storePath) && fs.mkdirSync(storePath, { recursive: true });
+  }
+
+  return storePath;
+}
 
 export function getNormalisedDateFormat(type: QimenType) {
   return getTypeDateFormat(type).replace(/\s/g, `'T'`).replace(/:/g, '-');
