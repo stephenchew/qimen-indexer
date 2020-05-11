@@ -4,8 +4,18 @@ import { createRunner, Callable } from './runner';
 import { initChartPaths, saveToFile, indexToEs } from './store';
 import createSession from './scrap';
 import { QimenType } from './types';
+import { getCliOption, validateCli } from './util/cli';
 import { clog, initLogPath, logCrawling, logIndexing } from './util/logging';
 import { login } from './util/login';
+
+const cliOption = getCliOption();
+
+if (!validateCli(cliOption)) {
+  console.log('Usage: npm start -- <type> <start> <finish> [--missing]');
+  console.log('e.g. npm start hour 2020-01-01T00:00:00 2020-01-31T21:00:00');
+  console.log('e.g. npm start -- month 2020-01 2030-12 --missing');
+  process.exit();
+}
 
 (async () => {
   console.time('app');
@@ -23,11 +33,9 @@ import { login } from './util/login';
   const { csrf, cookies } = sessionInfo;
   const queryChart = createSession(csrf, cookies);
 
-  // loop starts here
-
-  const type: QimenType = 'hour';
-  const start = new Date('2020-01-01T00:00:00');
-  const finish = new Date('2020-01-01T00:00:00');
+  const type: QimenType = cliOption.type;
+  const start = cliOption.start;
+  const finish = cliOption.finish;
 
   const dates = datesGenerator(type, start, finish);
 
@@ -46,8 +54,6 @@ import { login } from './util/login';
     !(result.done ?? true);
     result = await runner.next()
   ) {
-    // console.time('es');
-
     let promiseElastic: Promise<{ type: QimenType; date: Date; resp: any }>[] = [];
     for (let settled of result.value) {
       // can't use array.forEach
@@ -79,8 +85,6 @@ import { login } from './util/login';
         logIndexing(type, settled.reason.date.toISOString());
       }
     });
-
-    // console.timeEnd('es');
 
     clog(`processed ${result.value.length} record(s)`);
   }
