@@ -1,7 +1,7 @@
 import datesGenerator from './dates-generator';
 import parse from './parse';
 import { createRunner, Callable } from './runner';
-import { initChartPaths, saveToFile, indexToEs } from './store';
+import { initChartPaths, saveToFile, indexToEs, chartExists } from './store';
 import createSession from './scrap';
 import { QimenType } from './types';
 import { getCliOption, validateCli } from './util/cli';
@@ -37,9 +37,15 @@ if (!validateCli(cliOption)) {
   const start = cliOption.start;
   const finish = cliOption.finish;
 
-  const dates = datesGenerator(type, start, finish);
+  let dates = datesGenerator(type, start, finish);
 
-  clog(`Running for ${type} from ${start.toString()} to ${finish.toString()}`);
+  if (cliOption.options.missing) {
+    dates = dates.filter((d) => !chartExists(type, d));
+    clog(`Running only for missing '${type}'`);
+    dates.forEach((d) => clog(d));
+  } else {
+    clog(`Running for ${type} from ${start.toString()} to ${finish.toString()}`);
+  }
 
   const responses: Callable<{ type: QimenType; date: Date; payload: any }>[] = dates.map((current: Date) => () =>
     queryChart(type, current)

@@ -44,7 +44,15 @@ export const indexToEs = async (type: QimenType, date: Date, data: Chart) => {
   return rp(options).promise();
 };
 
-export function getStorePath(type: QimenType, date: Date, createIfMissing = false): string {
+export function chartExists(type: QimenType, date: Date): boolean {
+  return fs.existsSync(`${getStorePath(type, date)}/${format(date, getNormalisedDateFormat(type))}.json`);
+}
+
+function getNormalisedDateFormat(type: QimenType) {
+  return getTypeDateFormat(type).replace(/\s/g, `'T'`).replace(/:/g, '-');
+}
+
+function getStorePath(type: QimenType, date: Date, createIfMissing = false): string {
   let storePath = `${CHART_PATH}/${type}`;
 
   if (type === 'hour') {
@@ -53,8 +61,4 @@ export function getStorePath(type: QimenType, date: Date, createIfMissing = fals
   }
 
   return storePath;
-}
-
-export function getNormalisedDateFormat(type: QimenType) {
-  return getTypeDateFormat(type).replace(/\s/g, `'T'`).replace(/:/g, '-');
 }
