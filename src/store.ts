@@ -62,3 +62,8 @@ function getStorePath(type: QimenType, date: Date, createIfMissing = false): str
 
   return storePath;
 }
+
+export const pingEs = async () =>
+  rp(URL, { resolveWithFullResponse: true })
+    .then(({ statusCode }: { statusCode: number }) => statusCode === 200)
+    .catch(() => false);

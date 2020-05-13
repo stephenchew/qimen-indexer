@@ -10,6 +10,7 @@ interface CliParameter {
 interface CliOption {
   // Process only missing records
   missing: boolean;
+  ignoreEs: boolean;
 }
 
 export const getCliOption = (): CliParameter => {
@@ -30,5 +31,6 @@ export const validateCli = ({ type, start, finish }: CliParameter) =>
 function parseOptions(options: string[]): CliOption {
   return {
     missing: options.indexOf('--missing') > -1,
+    ignoreEs: options.indexOf('--ignore-es') > -1,
   };
 }

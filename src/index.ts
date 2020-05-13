@@ -1,7 +1,7 @@
 import datesGenerator from './dates-generator';
 import parse from './parse';
 import { createRunner, Callable } from './runner';
-import { initChartPaths, saveToFile, indexToEs, chartExists } from './store';
+import { chartExists, indexToEs, initChartPaths, pingEs, saveToFile } from './store';
 import createSession from './scrap';
 import { QimenType } from './types';
 import { getCliOption, validateCli } from './util/cli';
@@ -11,13 +11,19 @@ import { login } from './util/login';
 const cliOption = getCliOption();
 
 if (!validateCli(cliOption)) {
-  console.log('Usage: npm start -- <type> <start> <finish> [--missing]');
+  console.log('Usage: npm start -- <type> <start> <finish> [--missing --ignore-es]');
   console.log('e.g. npm start hour 2020-01-01T00:00:00 2020-01-31T21:00:00');
   console.log('e.g. npm start -- month 2020-01 2030-12 --missing');
+  console.log('e.g. npm start -- year 2020 2030 --missing --ignore-es');
   process.exit();
 }
 
 (async () => {
+  if (!cliOption.options.ignoreEs && !(await pingEs())) {
+    console.log(`!! ElasticSearch is down. If it's intentional, add --ignore-es option.`);
+    process.exit();
+  }
+
   console.time('app');
   await init();
 
