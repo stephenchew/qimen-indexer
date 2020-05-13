@@ -21,6 +21,9 @@ if (!validateCli(cliOption)) {
   console.time('app');
   await init();
 
+  // @TODO: wait for ElasticSearch server availability
+  // @TODO: write a task to run through all charts json and index into ElasticSearch
+
   console.time('login');
   const sessionInfo = await login();
   console.timeEnd('login');
