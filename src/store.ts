@@ -55,7 +55,7 @@ function getNormalisedDateFormat(type: QimenType) {
 function getStorePath(type: QimenType, date: Date, createIfMissing = false): string {
   let storePath = `${CHART_PATH}/${type}`;
 
-  if (type === 'hour') {
+  if (type === 'hour' || type === 'day') {
     storePath += `/${date.getFullYear()}`;
     createIfMissing && !fs.existsSync(storePath) && fs.mkdirSync(storePath, { recursive: true });
   }
