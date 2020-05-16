@@ -1,5 +1,4 @@
 import datesGenerator from './dates-generator';
-import { addHours } from 'date-fns';
 
 describe('Generates list of dates based on given start and finish dates', () => {
   it(`should generates all dates with the gap of 2 hours if given type is 'hour'`, () => {

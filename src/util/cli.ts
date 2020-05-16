@@ -1,4 +1,5 @@
-import { QimenType, isQimenType } from '../types';
+import { QimenType } from '../types';
+import { QimenType as Qimen } from '../constants/qimen-type';
 
 interface CliParameter {
   type: QimenType;
@@ -26,7 +27,7 @@ export const getCliOption = (): CliParameter => {
 };
 
 export const validateCli = ({ type, start, finish }: CliParameter) =>
-  isQimenType(type) && !isNaN(start.getTime()) && !isNaN(finish.getTime());
+  Qimen.validate(type) && !isNaN(start.getTime()) && !isNaN(finish.getTime());
 
 function parseOptions(options: string[]): CliOption {
   return {

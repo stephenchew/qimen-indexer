@@ -2,10 +2,6 @@ export type taichi = 'yin' | 'yang';
 
 export type QimenType = 'destiny' | 'year' | 'month' | 'day' | 'hour';
 
-export function isQimenType(str: string): str is QimenType {
-  return str === 'destiny' || str === 'year' || str === 'month' || str === 'day' || str === 'hour';
-}
-
 export type Chart = {
   type: QimenType;
   temporal: string;
