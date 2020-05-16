@@ -1,6 +1,6 @@
 import rp from 'request-promise-native';
-import { QimenType } from './types';
-import { getTypeValue } from './util/constants';
+import { QimenType } from '../types';
+import { getTypeValue } from '../constants/constants';
 
 const SOLAR = 1;
 

@@ -2,7 +2,7 @@ import addDays from 'date-fns/addDays';
 import addHours from 'date-fns/addHours';
 import addMonths from 'date-fns/addMonths';
 import addYears from 'date-fns/addYears';
-import { QimenType } from './types';
+import { QimenType } from '../types';
 
 /**
  * Generate a list of dates. Both start and finish date are inclusive.

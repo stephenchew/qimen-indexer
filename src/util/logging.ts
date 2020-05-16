@@ -1,7 +1,7 @@
 import format from 'date-fns/format';
 import fs from 'fs';
 import { QimenType } from '../types';
-import { getTypeDateFormat } from './constants';
+import { getTypeDateFormat } from '../constants/constants';
 
 const LOG_PATH = './logs';
 

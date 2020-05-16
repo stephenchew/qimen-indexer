@@ -1,12 +1,12 @@
-import datesGenerator from './dates-generator';
-import parse from './parse';
-import { createRunner, Callable } from './runner';
-import { chartExists, indexToEs, initChartPaths, pingEs, saveToFile } from './store';
-import createSession from './scrap';
+import datesGenerator from './util/dates-generator';
+import parse from './util/parse';
+import { createRunner, Callable } from './util/runner';
+import { chartExists, indexToEs, initChartPaths, pingEs, saveToFile } from './services/store';
+import createSession from './services/scrap';
 import { QimenType } from './types';
 import { getCliOption, validateCli } from './util/cli';
 import { clog, initLogPath, logCrawling, logIndexing } from './util/logging';
-import { login } from './util/login';
+import { login } from './services/login';
 
 const cliOption = getCliOption();
 

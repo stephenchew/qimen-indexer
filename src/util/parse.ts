@@ -1,9 +1,9 @@
 import cheerio from 'cheerio';
-import { getTypeDateFormat } from './util/constants';
-import { Chart, QimenType } from './types';
+import { getTypeDateFormat } from '../constants/constants';
+import { Chart, QimenType } from '../types';
 import format from 'date-fns/format';
-import * as Constants from './util/constants';
-import * as ConstantsZhTw from './util/constants-zh-tw';
+import * as Constants from '../constants/constants';
+import * as ConstantsZhTw from '../constants/constants-zh-tw';
 
 const cheerioOptions = {
   decodeEntities: false,

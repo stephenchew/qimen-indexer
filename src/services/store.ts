@@ -1,8 +1,8 @@
 import format from 'date-fns/format';
 import fs from 'fs';
 import rp from 'request-promise-native';
-import { Chart, QimenType } from './types';
-import { getTypeDateFormat } from './util/constants';
+import { Chart, QimenType } from '../types';
+import { getTypeDateFormat } from '../constants/constants';
 
 const URL = 'http://localhost:9222';
 
