@@ -48,7 +48,7 @@ export default (type: QimenType, start: Date, finish: Date) => {
       normalisedFinish = new Date(finish.getFullYear(), 1, 10, 1);
       break;
   }
-  const dates = [];
+  const dates: Date[] = [];
 
   for (let d = normalisedStart; d.getTime() <= normalisedFinish.getTime(); d = add(d, increment)) {
     dates.push(d);

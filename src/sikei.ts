@@ -1,9 +1,4 @@
-import parse from './parse';
-import { getNormalisedDateFormat } from './store';
-import format from 'date-fns/format';
-import { Callable, createRunner } from './runner';
-import addDays from 'date-fns/addDays';
-import datesGenerator from './dates-generator';
+import { Callable, createRunner } from './util/runner';
 
 const body1 = `<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div style="width:auto;"><html><head><met
 a http-equiv="Content-Type" content="text/html; charset=utf-8"></head><meta http-equiv="Content-Type" conten
@@ -64,7 +59,7 @@ td.mark{background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMA
 .格局 td {width:10%;height:67px;font-size:0.5em;line-height:1em;vertical-align:middle;font-weight:400;}
 .格局 td.天干{width:1em;font-size:1.0em;vertical-align:middle;font-weight:700;}
 .格局 td.九數{font-size:1.5em;text-align:center;vertical-align:middle;font-weight:600;}
-.格局 td.九數 span{margin-right: 7px;}  
+.格局 td.九數 span{margin-right: 7px;}
 .卦64{width:45px;height:51px;background-repeat:no-repeat;background-position:left top;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtQAAADMCAMAAABk6cQdAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA+dpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wOkNyZWF0ZURhdGU9IjIwMTgtMDgtMTRUMDk6NDk6MzIrMDg6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDE4LTA4LTE0VDEwOjU5OjU2KzA4OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDE4LTA4LTE0VDEwOjU5OjU2KzA4OjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxRkZFMTMzQzlGNkUxMUU4QjAxM0RGMzlFMzUzRkQxRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxRkZFMTMzRDlGNkUxMUU4QjAxM0RGMzlFMzUzRkQxRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjFGRkUxMzNBOUY2RTExRThCMDEzREYzOUUzNTNGRDFFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjFGRkUxMzNCOUY2RTExRThCMDEzREYzOUUzNTNGRDFFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+X5admwAAAAZQTFRFLS0t////deIVYwAAAAJ0Uk5T/wDltzBKAAAD7klEQVR42uzdMXLjMBBFQeL+l3biQIGtEgVy8AfsF25pWTK3g+EsLB1D2qzDLRDUUgPUx2f9/oW//vC/P//vxR+9+rv3ceOlL3/xqbdx45u+5o3k3GmooYYaaqihhhpqqKGGeh61ZKUnQS3tuqfuORbWj8lPvXktHxShhhpqqKGGGmqooYZ6U9SSlZ4EtbTrnnoUTFhjj7FwOPvx/ZWhhhpqqKGGGmqooYYa6nnUkpWeBLVkT500cda/6WVPDaHHW87eaaihhhpqqKGGGmqooYZ6HrVkpSdBLdlTXzaOdT2+MJb8ImHKY8O+D4pQQw011FBDDTXUUEPdBrVkpSdBLe26p+556ZCBM2amDnkgSXlQhBpqqKGGGmqooYYa6k1RS1Z6EtQS1BLUEtTaG3X90UJHTx09nb3ymxdDDTXUUEMNNdRQQw011P6bXLLSE9RS9z11wRg0Oo2FaQPn6s9BDnnGOPegCDXUUEMNNdRQQw011FDbU8tKT4JasqfOGgvN1K2Ot5x9MdRQQw011FBDDTXUUEM9j1qy0pOgltbuqVuOhaPgXWcO4GbqTx4UoYYaaqihhhpqqKGGGmp7alnpSVBL9tSNj5WYqSMfSFIeFKGGGmqooYYaaqihhnpT1JKVngS1tHZPvdUZg5Zf47LsJ9z3i4yghhpqqKGGGmqooYYaap9PLSs9CWoJaglqCWrpBbWVXt7pybHJRyQseTHUUEMNNdRQQw011FBD7b/JJSs9QS3ZUx/P/da0lJ8w7lRr5bldqKGGGmqooYYaaqihhnoetWSlJ0EtNdpTpxxfODeutx7Ah5n65gNNUEMNNdRQQw011FBDDbVkpSdBLe27p44ZC9PGZDfv0itDDTXUUEMNtX8XqKGG2s2bRy1Z6UlQS2v31AUzU6uJs36WfepMfdWLoYYaaqihhhpqqKGGGmp7aslKT1BL9tTHc3/NrvdPmPs1LmPyF2+hhhpqqKGGGmqooYYaap/7ISs9CWoJaglqCWrpBfXzVnqn3kf9m66+eRWXrrzTUEMNNdRQQw011FBDDfU8aslKT4JaWrunLpiZ6ias6NOTKUdPU87tXnVlqKGGGmqooYYaaqihhnoetWSlJ0EtNdpTxx3QyP2A2QZPDSN2TB6x36MINdRQQw011FBDDTXUm6KWrPQkqKVd99QLBt+u35o2cr+vL+TmvXkbUEMNNdRQQw011FBDDfU8aslKT4JaWrunvm9mihkLC45RLH5qSLn0kpsHNdRQQw011FBDDTXUUM+jlqz0JKiltXvq+lMUG/2OYv0MWX7pkFM2b64MNdRQQw011FBDDTXUUM+jlqz0JKilwn4EGAC8xz037ukXwgAAAABJRU5ErkJggg==');}
 .天{background-position: 3px 0px;}.地{background-position: -42px 0px;}.屯{background-position: -87px 0px;}.蒙{background-position: -133px 0px;}.需{background-position: -178px 0px;}.訟{background-position: -224px 0px;}.師{background-position: -269px 0px;}.比{background-position: -314px 0px;}.小畜{background-position: -359px 0px;}.履{background-position: -404px 0px;}.泰{background-position: -450px 0px;}.否{background-position: -495px 0px;}.同人{background-position: -541px 0px;}.大有{background-position: -586px 0px;}.謙{background-position: -631px 0px;}.豫{background-position: -676px 0px;}.隨{background-position: 3px -51px;}.蠱{background-position: -42px -51px;}.臨{background-position: -87px -51px;}.觀{background-position: -133px -51px;}.噬嗑{background-position: -178px -51px;}.賁{background-position: -224px -51px;}.剝{background-position: -269px -51px;}.復{background-position: -314px -51px;}.旡妄{background-position: -359px -51px;}.大畜{background-position: -404px -51px;}.頤{background-position: -450px -51px;}.大過{background-position: -495px -51px;}.水{background-position: -541px -51px;}.火{background-position: -586px -51px;}.咸{background-position: -631px -51px;}.恆{background-position: -676px -51px;}
 .遯{background-position: 3px -102px;}.大壯{background-position: -42px -102px;}.晉{background-position: -87px -102px;}.明夷{background-position: -133px -102px;}.家人{background-position: -178px -102px;}.睽{background-position: -224px -102px;}.蹇{background-position: -269px -102px;}.解{background-position: -314px -102px;}.損{background-position: -359px -102px;}.益{background-position: -404px -102px;}.夬{background-position: -450px -102px;}.姤{background-position: -495px -102px;}.萃{background-position: -541px -102px;}.升{background-position: -586px -102px;}.困{background-position: -631px -102px;}.井{background-position: -676px -102px;}
@@ -102,7 +97,7 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 </style>
 <style type="text/css">
 <!--
-.格局 td.九數{padding-right:0.1rem}  
+.格局 td.九數{padding-right:0.1rem}
 //-->
 </style>
 <table width="870" cellpadding="2" cellspacing="1" align="center" class="">
@@ -120,7 +115,7 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 <table width="870" cellpadding="2" cellspacing="1" align="center" class="" style="margin-top:5px;">
   <tr class="tdW" width="55%">
     <td valign="top">
-      
+
       <table width="100%" cellpadding="0" cellspacing="1" class="tdB">
         <tr>
           <th width="25%" class="td1">時 Hour</th>
@@ -231,7 +226,7 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
       </table>
     </td>
     <td width="45%" valign="top">
-      
+
       <table width="100%" cellpadding="2" cellspacing="1" class="tdB" style="line-height: 2.1em">
         <tr>
           <th width="12%" class="td2 白">陽曆</th>
@@ -792,7 +787,7 @@ td.mark{background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMA
 .格局 td {width:10%;height:67px;font-size:0.5em;line-height:1em;vertical-align:middle;font-weight:400;}
 .格局 td.天干{width:1em;font-size:1.0em;vertical-align:middle;font-weight:700;}
 .格局 td.九數{font-size:1.5em;text-align:center;vertical-align:middle;font-weight:600;}
-.格局 td.九數 span{margin-right: 7px;}  
+.格局 td.九數 span{margin-right: 7px;}
 .卦64{width:45px;height:51px;background-repeat:no-repeat;background-position:left top;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtQAAADMCAMAAABk6cQdAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA+dpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wOkNyZWF0ZURhdGU9IjIwMTgtMDgtMTRUMDk6NDk6MzIrMDg6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDE4LTA4LTE0VDEwOjU5OjU2KzA4OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDE4LTA4LTE0VDEwOjU5OjU2KzA4OjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDoxRkZFMTMzQzlGNkUxMUU4QjAxM0RGMzlFMzUzRkQxRSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDoxRkZFMTMzRDlGNkUxMUU4QjAxM0RGMzlFMzUzRkQxRSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjFGRkUxMzNBOUY2RTExRThCMDEzREYzOUUzNTNGRDFFIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjFGRkUxMzNCOUY2RTExRThCMDEzREYzOUUzNTNGRDFFIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+X5admwAAAAZQTFRFLS0t////deIVYwAAAAJ0Uk5T/wDltzBKAAAD7klEQVR42uzdMXLjMBBFQeL+l3biQIGtEgVy8AfsF25pWTK3g+EsLB1D2qzDLRDUUgPUx2f9/oW//vC/P//vxR+9+rv3ceOlL3/xqbdx45u+5o3k3GmooYYaaqihhhpqqKGGeh61ZKUnQS3tuqfuORbWj8lPvXktHxShhhpqqKGGGmqooYZ6U9SSlZ4EtbTrnnoUTFhjj7FwOPvx/ZWhhhpqqKGGGmqooYYa6nnUkpWeBLVkT500cda/6WVPDaHHW87eaaihhhpqqKGGGmqooYZ6HrVkpSdBLdlTXzaOdT2+MJb8ImHKY8O+D4pQQw011FBDDTXUUEPdBrVkpSdBLe26p+556ZCBM2amDnkgSXlQhBpqqKGGGmqooYYa6k1RS1Z6EtQS1BLUEtTaG3X90UJHTx09nb3ymxdDDTXUUEMNNdRQQw011P6bXLLSE9RS9z11wRg0Oo2FaQPn6s9BDnnGOPegCDXUUEMNNdRQQw011FDbU8tKT4JasqfOGgvN1K2Ot5x9MdRQQw011FBDDTXUUEM9j1qy0pOgltbuqVuOhaPgXWcO4GbqTx4UoYYaaqihhhpqqKGGGmp7alnpSVBL9tSNj5WYqSMfSFIeFKGGGmqooYYaaqihhnpT1JKVngS1tHZPvdUZg5Zf47LsJ9z3i4yghhpqqKGGGmqooYYaap9PLSs9CWoJaglqCWrpBbWVXt7pybHJRyQseTHUUEMNNdRQQw011FBD7b/JJSs9QS3ZUx/P/da0lJ8w7lRr5bldqKGGGmqooYYaaqihhnoetWSlJ0EtNdpTpxxfODeutx7Ah5n65gNNUEMNNdRQQw011FBDDbVkpSdBLe27p44ZC9PGZDfv0itDDTXUUEMNtX8XqKGG2s2bRy1Z6UlQS2v31AUzU6uJs36WfepMfdWLoYYaaqihhhpqqKGGGmp7aslKT1BL9tTHc3/NrvdPmPs1LmPyF2+hhhpqqKGGGmqooYYaap/7ISs9CWoJaglqCWrpBfXzVnqn3kf9m66+eRWXrrzTUEMNNdRQQw011FBDDfU8aslKT4JaWrunLpiZ6ias6NOTKUdPU87tXnVlqKGGGmqooYYaaqihhnoetWSlJ0EtNdpTxx3QyP2A2QZPDSN2TB6x36MINdRQQw011FBDDTXUm6KWrPQkqKVd99QLBt+u35o2cr+vL+TmvXkbUEMNNdRQQw011FBDDfU8aslKT4JaWrunvm9mihkLC45RLH5qSLn0kpsHNdRQQw011FBDDTXUUM+jlqz0JKiltXvq+lMUG/2OYv0MWX7pkFM2b64MNdRQQw011FBDDTXUUM+jlqz0JKilwn4EGAC8xz037ukXwgAAAABJRU5ErkJggg==');}
 .天{background-position: 3px 0px;}.地{background-position: -42px 0px;}.屯{background-position: -87px 0px;}.蒙{background-position: -133px 0px;}.需{background-position: -178px 0px;}.訟{background-position: -224px 0px;}.師{background-position: -269px 0px;}.比{background-position: -314px 0px;}.小畜{background-position: -359px 0px;}.履{background-position: -404px 0px;}.泰{background-position: -450px 0px;}.否{background-position: -495px 0px;}.同人{background-position: -541px 0px;}.大有{background-position: -586px 0px;}.謙{background-position: -631px 0px;}.豫{background-position: -676px 0px;}.隨{background-position: 3px -51px;}.蠱{background-position: -42px -51px;}.臨{background-position: -87px -51px;}.觀{background-position: -133px -51px;}.噬嗑{background-position: -178px -51px;}.賁{background-position: -224px -51px;}.剝{background-position: -269px -51px;}.復{background-position: -314px -51px;}.旡妄{background-position: -359px -51px;}.大畜{background-position: -404px -51px;}.頤{background-position: -450px -51px;}.大過{background-position: -495px -51px;}.水{background-position: -541px -51px;}.火{background-position: -586px -51px;}.咸{background-position: -631px -51px;}.恆{background-position: -676px -51px;}
 .遯{background-position: 3px -102px;}.大壯{background-position: -42px -102px;}.晉{background-position: -87px -102px;}.明夷{background-position: -133px -102px;}.家人{background-position: -178px -102px;}.睽{background-position: -224px -102px;}.蹇{background-position: -269px -102px;}.解{background-position: -314px -102px;}.損{background-position: -359px -102px;}.益{background-position: -404px -102px;}.夬{background-position: -450px -102px;}.姤{background-position: -495px -102px;}.萃{background-position: -541px -102px;}.升{background-position: -586px -102px;}.困{background-position: -631px -102px;}.井{background-position: -676px -102px;}
@@ -830,7 +825,7 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 </style>
 <style type="text/css">
 <!--
-.格局 td.九數{padding-right:0.1rem}  
+.格局 td.九數{padding-right:0.1rem}
 //-->
 </style>
 <table width="870" cellpadding="2" cellspacing="1" align="center" class="">
@@ -848,7 +843,7 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 <table width="870" cellpadding="2" cellspacing="1" align="center" class="" style="margin-top:5px;">
   <tr class="tdW" width="55%">
     <td valign="top">
-      
+
       <table width="100%" cellpadding="0" cellspacing="1" class="tdB">
         <tr>
           <th width="25%" class="td1">時 Hour</th>
@@ -959,7 +954,7 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
       </table>
     </td>
     <td width="45%" valign="top">
-      
+
       <table width="100%" cellpadding="2" cellspacing="1" class="tdB" style="line-height: 2.1em">
         <tr>
           <th width="12%" class="td2 白">陽曆</th>
@@ -1511,19 +1506,3 @@ small.天干{position:relative;top:-11px;left:3px;border-radius:20px;border: 1px
 //     yield a;
 //   }
 // }
-
-// const start = new Date('2020-05-09T23:00:00');
-// const finish = new Date('2020-05-11T21:00:00');
-
-// const start = new Date('2020-05-10T00:00:00');
-// const finish = new Date('2020-05-12T00:00:00');
-
-// const start = new Date('2020-05-01');
-// const finish = new Date('2020-05-31');
-
-const start = new Date('2020');
-const finish = new Date('2030');
-
-const dates = datesGenerator('year', start, finish);
-
-dates.forEach((d) => console.log(d.toString()));
