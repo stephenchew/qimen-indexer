@@ -45,7 +45,11 @@ export const indexToEs = async (type: QimenType, date: Date, data: Chart) => {
 };
 
 export function chartExists(type: QimenType, date: Date): boolean {
-  return fs.existsSync(`${getStorePath(type, date)}/${format(date, getNormalisedDateFormat(type))}.json`);
+  return fs.existsSync(getChartPath(type, date));
+}
+
+export function getChartPath(type: QimenType, date: Date): string {
+  return `${getStorePath(type, date)}/${format(date, getNormalisedDateFormat(type))}.json`;
 }
 
 function getNormalisedDateFormat(type: QimenType) {

@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npx tsc && node build/index.js",
     "start:nocompile": "node build/index.js",
-    "indexing": "npx tsc && node build/entry/indexing.js",
-    "indexing:nocompile": "node build/entry/indexing.js",
+    "reindex": "npx tsc && node build/entry/reindex.js",
+    "reindex:nocompile": "node build/entry/reindex.js",
     "test": "npx jest --watch",
     "sikei": "node build/sikei.js"
   },
